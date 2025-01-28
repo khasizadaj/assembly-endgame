@@ -11,8 +11,8 @@ export default function Status(props) {
     ];
 
   return (
-    <section>
-      <div className="max-w-md w-full bg-green-600 py-4 px-12 rounded-lg">
+    <section className="max-w-md w-full">
+      <div className="bg-green-600 py-4 px-12 rounded-lg">
         <h1 className="text-base sm:text-xl text-center">{statusMessage}</h1>
       </div>
     </section>
