@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Status from "./components/Status";
 import Languages from "./components/Languages";
 import GuessedWord from "./components/GuessedWord";
+import Keyboard from "./components/Keyboard";
 
 const WORDS = [
   "Hello",
@@ -94,6 +95,34 @@ export default function App() {
       color: "white",
     },
   ]);
+  const [keyboardLetters, setkeyboardLetters] = useState([
+    { value: "A", state: "notSelected" },
+    { value: "B", state: "notSelected" },
+    { value: "C", state: "notSelected" },
+    { value: "D", state: "notSelected" },
+    { value: "E", state: "notSelected" },
+    { value: "F", state: "notSelected" },
+    { value: "G", state: "notSelected" },
+    { value: "H", state: "notSelected" },
+    { value: "I", state: "notSelected" },
+    { value: "J", state: "notSelected" },
+    { value: "K", state: "notSelected" },
+    { value: "L", state: "notSelected" },
+    { value: "M", state: "notSelected" },
+    { value: "N", state: "notSelected" },
+    { value: "O", state: "notSelected" },
+    { value: "P", state: "notSelected" },
+    { value: "Q", state: "notSelected" },
+    { value: "R", state: "notSelected" },
+    { value: "S", state: "notSelected" },
+    { value: "T", state: "notSelected" },
+    { value: "U", state: "notSelected" },
+    { value: "V", state: "notSelected" },
+    { value: "W", state: "notSelected" },
+    { value: "X", state: "notSelected" },
+    { value: "Y", state: "notSelected" },
+    { value: "Z", state: "notSelected" },
+  ]);
   const [guessedWord, setGuessedWord] = useState(getRandomWord());
 
   function getRandomWord() {
@@ -102,8 +131,7 @@ export default function App() {
     return randomWord.split("").map((letter) => {
       return {
         value: letter.toUpperCase(),
-        // isFound: false,
-        isFound: Math.random() < 0.5,
+        isFound: false,
       };
     });
   }
@@ -114,6 +142,10 @@ export default function App() {
 
   // derived values:
   //   gameResult -> from languages (if no language is left, game is over)
+  function onClick(letter) {
+    console.log("clicked", letter);
+  }
+
   return (
     <main className="flex flex-col justify-start items-center gap-12 min-h-screen bg-slate-900 text-slate-950 p-4 sm:p-12">
       <Header />
@@ -122,6 +154,7 @@ export default function App() {
       {/* Section: Guessed Word */}
       <GuessedWord word={guessedWord} />
       {/* Section: Letters to choose from */}
+      <Keyboard onClick={onClick} keyboardLetters={keyboardLetters} />
       {/* Section: New Game Button */}
     </main>
   );
