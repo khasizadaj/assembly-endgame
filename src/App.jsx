@@ -128,7 +128,7 @@ export default function App() {
   function getRandomWord() {
     const words = WORDS;
     const randomWord = words[Math.floor(Math.random() * words.length)];
-    return randomWord.split("").map((letter) => {
+    return "HELLO".split("").map((letter) => {
       return {
         value: letter.toUpperCase(),
         isFound: false,
@@ -143,7 +143,15 @@ export default function App() {
   // derived values:
   //   gameResult -> from languages (if no language is left, game is over)
   function onClick(letter) {
-    console.log("clicked", letter);
+    setGuessedWord((prevWord) => {
+      const newWord = prevWord.map((letterObj) => {
+        if (letterObj.value === letter) {
+          letterObj.isFound = true;
+        }
+        return letterObj;
+      });
+      return newWord;
+    });
   }
 
   return (
@@ -151,9 +159,7 @@ export default function App() {
       <Header />
       <Status statusType={statusType} />
       <Languages languages={languages} />
-      {/* Section: Guessed Word */}
       <GuessedWord word={guessedWord} />
-      {/* Section: Letters to choose from */}
       <Keyboard onClick={onClick} keyboardLetters={keyboardLetters} />
       {/* Section: New Game Button */}
     </main>
