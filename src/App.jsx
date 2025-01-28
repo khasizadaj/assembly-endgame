@@ -3,6 +3,29 @@ import { useState } from "react";
 import Header from "./components/Header";
 import Status from "./components/Status";
 import Languages from "./components/Languages";
+import GuessedWord from "./components/GuessedWord";
+
+const WORDS = [
+  "Hello",
+  "World",
+  "Assembly",
+  "Endgame",
+  "Programming",
+  "Language",
+  "Game",
+  "Guess",
+  "The",
+  "Word",
+  "In",
+  "Under",
+  "8",
+  "Attempts",
+  "To",
+  "Keep",
+  "The",
+  "Programming",
+  "World",
+];
 
 export default function App() {
   const statusType = "incorrect"; // TODO derive from last answer
@@ -71,9 +94,21 @@ export default function App() {
       color: "white",
     },
   ]);
+  const [guessedWord, setGuessedWord] = useState(getRandomWord());
+
+  function getRandomWord() {
+    const words = WORDS;
+    const randomWord = words[Math.floor(Math.random() * words.length)];
+    return randomWord.split("").map((letter) => {
+      return {
+        value: letter.toUpperCase(),
+        // isFound: false,
+        isFound: Math.random() < 0.5,
+      };
+    });
+  }
 
   // state values:
-  //   guessed word
   //   letters to choose from
   //   last answer (with status, i.e. correct, incorrect)
 
@@ -85,6 +120,7 @@ export default function App() {
       <Status statusType={statusType} />
       <Languages languages={languages} />
       {/* Section: Guessed Word */}
+      <GuessedWord word={guessedWord} />
       {/* Section: Letters to choose from */}
       {/* Section: New Game Button */}
     </main>
