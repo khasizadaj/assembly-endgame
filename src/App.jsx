@@ -124,6 +124,10 @@ export default function App() {
     { value: "Z", state: "notSelected" },
   ]);
   const [guessedWord, setGuessedWord] = useState(getRandomWord());
+  const [lastAnswer, setLastAnswer] = useState({
+    state: null,
+    value: null,
+  });
 
   function getRandomWord() {
     const words = WORDS;
@@ -143,6 +147,13 @@ export default function App() {
   // derived values:
   //   gameResult -> from languages (if no language is left, game is over)
   function onClick(letter) {
+    const isCorrect = guessedWord.some(
+      (letterObj) => letterObj.value === letter
+    );
+    setLastAnswer({
+      state: isCorrect ? "correct" : "incorrect",
+      value: letter,
+    });
     setGuessedWord((prevWord) => {
       const newWord = prevWord.map((letterObj) => {
         if (letterObj.value === letter) {
