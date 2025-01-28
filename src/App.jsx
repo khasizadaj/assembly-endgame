@@ -163,6 +163,17 @@ export default function App() {
       });
       return newWord;
     });
+    setkeyboardLetters((prevKeyboardLetters) => {
+      return prevKeyboardLetters.map((letterObj) => {
+        if (letterObj.value === letter) {
+          return {
+            ...letterObj,
+            state: isCorrect ? "selectedCorrect" : "selectedIncorrect",
+          };
+        }
+        return letterObj;
+      });
+    });
   }
 
   return (
