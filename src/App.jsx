@@ -27,6 +27,13 @@ const WORDS = [
   "World",
 ];
 
+const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => {
+  return {
+    value: letter,
+    state: "notSelected",
+  };
+});
+
 export default function App() {
   const statusType = "incorrect"; // TODO derive from last answer
   const [languages, setLanguages] = useState([
@@ -94,34 +101,7 @@ export default function App() {
       color: "white",
     },
   ]);
-  const [keyboardLetters, setkeyboardLetters] = useState([
-    { value: "A", state: "notSelected" },
-    { value: "B", state: "notSelected" },
-    { value: "C", state: "notSelected" },
-    { value: "D", state: "notSelected" },
-    { value: "E", state: "notSelected" },
-    { value: "F", state: "notSelected" },
-    { value: "G", state: "notSelected" },
-    { value: "H", state: "notSelected" },
-    { value: "I", state: "notSelected" },
-    { value: "J", state: "notSelected" },
-    { value: "K", state: "notSelected" },
-    { value: "L", state: "notSelected" },
-    { value: "M", state: "notSelected" },
-    { value: "N", state: "notSelected" },
-    { value: "O", state: "notSelected" },
-    { value: "P", state: "notSelected" },
-    { value: "Q", state: "notSelected" },
-    { value: "R", state: "notSelected" },
-    { value: "S", state: "notSelected" },
-    { value: "T", state: "notSelected" },
-    { value: "U", state: "notSelected" },
-    { value: "V", state: "notSelected" },
-    { value: "W", state: "notSelected" },
-    { value: "X", state: "notSelected" },
-    { value: "Y", state: "notSelected" },
-    { value: "Z", state: "notSelected" },
-  ]);
+  const [keyboardLetters, setkeyboardLetters] = useState(LETTERS);
   const [guessedWord, setGuessedWord] = useState(getRandomWord());
   const [lastAnswer, setLastAnswer] = useState(null);
 
