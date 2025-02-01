@@ -121,6 +121,15 @@ export default function App() {
   const gameIsOver = languages.filter((lang) => lang.isActive).length === 1;
 
   function onClick(letter) {
+    const isSelectedAlready = keyboardLetters.some(
+      (letterObj) =>
+        letterObj.state !== "notSelected" &&
+        letterObj.value.toUpperCase() === letter.toUpperCase()
+    );
+    if (isSelectedAlready) {
+      console.log("You already found this letter");
+      return;
+    }
     const isCorrect = guessedWord.some(
       (letterObj) => letterObj.value.toUpperCase() === letter.toUpperCase()
     );
