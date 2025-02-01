@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 function LetterBox(props) {
   const stateClasses = {
     notSelected: "bg-slate-600",
@@ -5,14 +7,13 @@ function LetterBox(props) {
     selectedIncorrect: "bg-red-600",
   };
 
+  const classes = clsx(
+    "rounded-lg font-semibold w-10 h-10 text-center",
+    stateClasses[props.state]
+  );
+
   return (
-    <button
-      onClick={() => props.onClick(props.value)}
-      className={
-        `rounded-lg font-semibold w-10 h-10 text-center ` +
-        stateClasses[props.state]
-      }
-    >
+    <button onClick={() => props.onClick(props.value)} className={classes}>
       {props.value}
     </button>
   );

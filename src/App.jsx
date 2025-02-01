@@ -40,63 +40,63 @@ const LANGUAGES = [
     name: "HTML",
     isActive: true,
     backgroundColor: "#E2680F",
-    color: "white",
+    color: "#FAFAFA",
   },
   {
     id: 2,
     name: "CSS",
     isActive: true,
     backgroundColor: "#328AF1",
-    color: "white",
+    color: "#FAFAFA",
   },
   {
     id: 3,
     name: "JavaScript",
     isActive: true,
     backgroundColor: "#F4EB13",
-    color: "inherit",
+    color: "#2A2A2A",
   },
   {
     id: 4,
     name: "TypeScript",
     isActive: true,
     backgroundColor: "#298EC6",
-    color: "white",
+    color: "#FAFAFA",
   },
   {
     id: 5,
     name: "React",
     isActive: true,
     backgroundColor: "#2ED3E9",
-    color: "inherit",
+    color: "#2A2A2A",
   },
   {
     id: 6,
     name: "C",
     isActive: true,
     backgroundColor: "#D02B2B",
-    color: "white",
+    color: "#FAFAFA",
   },
   {
     id: 7,
     name: "C++",
     isActive: true,
     backgroundColor: "#F5C400",
-    color: "inherit",
+    color: "#2A2A2A",
   },
   {
     id: 8,
     name: "Rust",
     isActive: true,
     backgroundColor: "#599137",
-    color: "white",
+    color: "#FAFAFA",
   },
   {
     id: 9,
     name: "Assembly",
     isActive: true,
     backgroundColor: "#2D519F",
-    color: "white",
+    color: "#FAFAFA",
   },
 ];
 
@@ -110,7 +110,7 @@ export default function App() {
   function getRandomWord() {
     const words = WORDS;
     const randomWord = words[Math.floor(Math.random() * words.length)];
-    return randomWord.split("").map((letter) => {
+    return words[0].split("").map((letter) => {
       return {
         value: letter.toUpperCase(),
         isFound: false,
