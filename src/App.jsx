@@ -120,7 +120,7 @@ export default function App() {
 
   function onClick(letter) {
     const isCorrect = guessedWord.some(
-      (letterObj) => letterObj.value === letter
+      (letterObj) => letterObj.value.toUpperCase() === letter.toUpperCase()
     );
     setLastAnswer({
       isCorrect: isCorrect,
@@ -130,16 +130,13 @@ export default function App() {
 
   useEffect(() => {
     if (lastAnswer === null) return;
-
-    setGuessedWord((prevWord) => {
-      const newWord = prevWord.map((letterObj) => {
-        if (letterObj.value === lastAnswer.letter) {
-          letterObj.isFound = true;
-        }
-        return letterObj;
-      });
-      return newWord;
-    });
+    setGuessedWord((prevWord) =>
+      prevWord.map((letterObj) =>
+        letterObj.value.toUpperCase() === lastAnswer.value.toUpperCase()
+          ? { ...letterObj, isFound: true } // ✅ Creates a new object
+          : letterObj
+      )
+    );
   }, [lastAnswer]);
 
   useEffect(() => {
@@ -164,12 +161,10 @@ export default function App() {
     if (lastAnswer === null) return;
 
     if (!lastAnswer.isCorrect) {
-      console.log("LALA - Update Languages");
       setLanguages((prevLanguages) => {
         const index = prevLanguages.findIndex((lang) => lang.isActive);
         if (index === -1) return prevLanguages; // No active language found
 
-        // Create a shallow copy and update only the first match
         const updatedLanguages = [...prevLanguages];
         updatedLanguages[index] = {
           ...updatedLanguages[index],
