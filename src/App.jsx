@@ -34,73 +34,75 @@ const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => {
   };
 });
 
+const LANGUAGES = [
+  {
+    id: 1,
+    name: "HTML",
+    isActive: true,
+    backgroundColor: "#E2680F",
+    color: "white",
+  },
+  {
+    id: 2,
+    name: "CSS",
+    isActive: true,
+    backgroundColor: "#328AF1",
+    color: "white",
+  },
+  {
+    id: 3,
+    name: "JavaScript",
+    isActive: true,
+    backgroundColor: "#F4EB13",
+    color: "inherit",
+  },
+  {
+    id: 4,
+    name: "TypeScript",
+    isActive: true,
+    backgroundColor: "#298EC6",
+    color: "white",
+  },
+  {
+    id: 5,
+    name: "React",
+    isActive: true,
+    backgroundColor: "#2ED3E9",
+    color: "inherit",
+  },
+  {
+    id: 6,
+    name: "C",
+    isActive: true,
+    backgroundColor: "#D02B2B",
+    color: "white",
+  },
+  {
+    id: 7,
+    name: "C++",
+    isActive: true,
+    backgroundColor: "#F5C400",
+    color: "inherit",
+  },
+  {
+    id: 8,
+    name: "Rust",
+    isActive: true,
+    backgroundColor: "#599137",
+    color: "white",
+  },
+  {
+    id: 9,
+    name: "Assembly",
+    isActive: true,
+    backgroundColor: "#2D519F",
+    color: "white",
+  },
+];
+
 export default function App() {
   const statusType = "incorrect"; // TODO derive from last answer
-  const [languages, setLanguages] = useState([
-    {
-      id: 1,
-      name: "HTML",
-      isActive: true,
-      backgroundColor: "#E2680F",
-      color: "white",
-    },
-    {
-      id: 2,
-      name: "CSS",
-      isActive: true,
-      backgroundColor: "#328AF1",
-      color: "white",
-    },
-    {
-      id: 3,
-      name: "JavaScript",
-      isActive: true,
-      backgroundColor: "#F4EB13",
-      color: "inherit",
-    },
-    {
-      id: 4,
-      name: "TypeScript",
-      isActive: true,
-      backgroundColor: "#298EC6",
-      color: "white",
-    },
-    {
-      id: 5,
-      name: "React",
-      isActive: true,
-      backgroundColor: "#2ED3E9",
-      color: "inherit",
-    },
-    {
-      id: 6,
-      name: "C",
-      isActive: true,
-      backgroundColor: "#D02B2B",
-      color: "white",
-    },
-    {
-      id: 7,
-      name: "C++",
-      isActive: true,
-      backgroundColor: "#F5C400",
-      color: "inherit",
-    },
-    {
-      id: 8,
-      name: "Rust",
-      isActive: true,
-      backgroundColor: "#599137",
-      color: "white",
-    },
-    {
-      id: 9,
-      name: "Assembly",
-      isActive: true,
-      backgroundColor: "#2D519F",
-      color: "white",
-    },
-  ]);
+  const [languages, setLanguages] = useState(LANGUAGES);
   const [keyboardLetters, setkeyboardLetters] = useState(LETTERS);
   const [guessedWord, setGuessedWord] = useState(getRandomWord());
   const [lastAnswer, setLastAnswer] = useState(null);
@@ -126,6 +128,13 @@ export default function App() {
       isCorrect: isCorrect,
       value: letter,
     });
+  }
+
+  function resetGame() {
+    setGuessedWord(getRandomWord());
+    setLastAnswer(null);
+    setkeyboardLetters(LETTERS);
+    setLanguages(LANGUAGES);
   }
 
   useEffect(() => {
@@ -184,7 +193,10 @@ export default function App() {
       <GuessedWord word={guessedWord} />
       <Keyboard onClick={onClick} keyboardLetters={keyboardLetters} />
       {gameIsOver ? (
-        <button className="bg-green-600 py-2 px-4 rounded-lg text-white">
+        <button
+          className="bg-green-600 py-2 px-4 rounded-lg text-white"
+          onClick={resetGame}
+        >
           New Game
         </button>
       ) : null}
