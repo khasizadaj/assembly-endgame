@@ -110,7 +110,7 @@ export default function App() {
   function getRandomWord() {
     const words = WORDS;
     const randomWord = words[Math.floor(Math.random() * words.length)];
-    return words[0].split("").map((letter) => {
+    return randomWord.split("").map((letter) => {
       return {
         value: letter.toUpperCase(),
         isFound: false,
