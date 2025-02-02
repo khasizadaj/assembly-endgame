@@ -30,6 +30,8 @@ export default function Keyboard(props) {
               onClick={props.onClick}
               value={letter.value}
               state={letter.state}
+              aria-disabled={letter.state === "notSelected" ? false : true}
+              aria-label={`Letter ${letter.value}`}
               disabled={props.statusType === "gameOver" ? true : false}
             />
           );

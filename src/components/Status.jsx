@@ -23,7 +23,7 @@ export default function Status(props) {
   );
 
   return (
-    <section className="max-w-md w-full">
+    <section className="max-w-md w-full" aria-live="polite" role="status">
       <div className={className}>
         {props.lastAnswer.value && (
           <h1 className="text-base sm:text-xl text-center">{statusMessage}</h1>
