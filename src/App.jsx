@@ -120,11 +120,11 @@ export default function App() {
     });
   }
 
-  const gameIsOver = languages.filter((lang) => lang.isActive).length === 1 || guessedWord.every((letter) => letter.isFound);
+  const gameIsOver =
+    languages.filter((lang) => lang.isActive).length === 1 ||
+    guessedWord.every((letter) => letter.isFound);
   let statusType =
-    lastAnswer.value && lastAnswer.isCorrect
-      ? "correct"
-      : "incorrect";
+    lastAnswer.value && lastAnswer.isCorrect ? "correct" : "incorrect";
   if (gameIsOver) {
     statusType = "gameOver";
   }
@@ -213,7 +213,34 @@ export default function App() {
       <Status statusType={statusType} lastAnswer={lastAnswer} />
       <Languages languages={languages} />
       <GuessedWord word={guessedWord} statusType={statusType} />
-      <Keyboard onClick={onClick} keyboardLetters={keyboardLetters} statusType={statusType} />
+      <Keyboard
+        onClick={onClick}
+        keyboardLetters={keyboardLetters}
+        statusType={statusType}
+      />
+      <section className="sr-only" aria-live="polite" role="status">
+        <p>
+          {lastAnswer.value &&
+            (lastAnswer.isCorrect
+              ? `Correct! The letter ${lastAnswer.value} is in the word.`
+              : `Sorry, the letter ${lastAnswer.value} is not in the word.`)}
+        </p>
+        <p>
+          Current word:{" "}
+          {guessedWord
+            .map((letter) => (letter.isFound ? letter.value + "." : "blank."))
+            .join(" ")}
+        </p>
+        {gameIsOver &&
+          (lastAnswer.value && lastAnswer.isCorrect ? (
+            <p>You Won!</p>
+          ) : (
+            <p>
+              You Lost! Word was{" "}
+              {guessedWord.map((letter) => letter.value).join("")}
+            </p>
+          ))}
+      </section>
       {gameIsOver ? (
         <button
           className="bg-green-600 py-2 px-4 rounded-lg text-white"
