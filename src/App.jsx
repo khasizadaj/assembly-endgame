@@ -101,11 +101,13 @@ const LANGUAGES = [
 ];
 
 export default function App() {
-  const statusType = "incorrect"; // TODO derive from last answer
   const [languages, setLanguages] = useState(LANGUAGES);
   const [keyboardLetters, setkeyboardLetters] = useState(LETTERS);
   const [guessedWord, setGuessedWord] = useState(getRandomWord());
-  const [lastAnswer, setLastAnswer] = useState(null);
+  const [lastAnswer, setLastAnswer] = useState({
+    isCorrect: false,
+    value: null,
+  });
 
   function getRandomWord() {
     const words = WORDS;
@@ -118,7 +120,15 @@ export default function App() {
     });
   }
 
-  const gameIsOver = languages.filter((lang) => lang.isActive).length === 1;
+  const gameIsOver = languages.filter((lang) => lang.isActive).length === 1 || guessedWord.every((letter) => letter.isFound);
+  let statusType =
+    lastAnswer.value && lastAnswer.isCorrect
+      ? "correct"
+      : "incorrect";
+  if (gameIsOver) {
+    statusType = "gameOver";
+  }
+  console.log(statusType);
 
   function onClick(letter) {
     const isSelectedAlready = keyboardLetters.some(
@@ -141,13 +151,16 @@ export default function App() {
 
   function resetGame() {
     setGuessedWord(getRandomWord());
-    setLastAnswer(null);
+    setLastAnswer({
+      isCorrect: false,
+      value: null,
+    });
     setkeyboardLetters(LETTERS);
     setLanguages(LANGUAGES);
   }
 
   useEffect(() => {
-    if (lastAnswer === null) return;
+    if (lastAnswer.value === null) return;
     setGuessedWord((prevWord) =>
       prevWord.map((letterObj) =>
         letterObj.value.toUpperCase() === lastAnswer.value.toUpperCase()
@@ -158,7 +171,7 @@ export default function App() {
   }, [lastAnswer]);
 
   useEffect(() => {
-    if (lastAnswer === null) return;
+    if (lastAnswer.value === null) return;
 
     setkeyboardLetters((prevKeyboardLetters) => {
       return prevKeyboardLetters.map((letterObj) => {
@@ -176,7 +189,7 @@ export default function App() {
   }, [lastAnswer]);
 
   useEffect(() => {
-    if (lastAnswer === null) return;
+    if (lastAnswer.value === null) return;
 
     if (!lastAnswer.isCorrect) {
       setLanguages((prevLanguages) => {
@@ -197,10 +210,10 @@ export default function App() {
   return (
     <main className="flex flex-col justify-start items-center gap-12 min-h-screen bg-slate-900 text-slate-950 p-4 sm:p-12">
       <Header />
-      <Status statusType={statusType} />
+      <Status statusType={statusType} lastAnswer={lastAnswer} />
       <Languages languages={languages} />
-      <GuessedWord word={guessedWord} />
-      <Keyboard onClick={onClick} keyboardLetters={keyboardLetters} />
+      <GuessedWord word={guessedWord} statusType={statusType} />
+      <Keyboard onClick={onClick} keyboardLetters={keyboardLetters} statusType={statusType} />
       {gameIsOver ? (
         <button
           className="bg-green-600 py-2 px-4 rounded-lg text-white"

@@ -13,7 +13,7 @@ function LetterBox(props) {
   );
 
   return (
-    <button onClick={() => props.onClick(props.value)} className={classes}>
+    <button onClick={() => props.onClick(props.value)} className={classes} disabled={props.disabled}>
       {props.value}
     </button>
   );
@@ -30,6 +30,7 @@ export default function Keyboard(props) {
               onClick={props.onClick}
               value={letter.value}
               state={letter.state}
+              disabled={props.statusType === "gameOver" ? true : false}
             />
           );
         })}
