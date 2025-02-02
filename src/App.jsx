@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useWindowSize } from "react-use";
+import Confetti from "react-confetti";
 
 import Header from "./components/Header";
 import Status from "./components/Status";
@@ -109,6 +111,8 @@ export default function App() {
     value: null,
   });
 
+  const { width, height } = useWindowSize();
+
   function getRandomWord() {
     const words = WORDS;
     const randomWord = words[Math.floor(Math.random() * words.length)];
@@ -128,7 +132,6 @@ export default function App() {
   if (gameIsOver) {
     statusType = "gameOver";
   }
-  console.log(statusType);
 
   function onClick(letter) {
     const isSelectedAlready = keyboardLetters.some(
@@ -209,6 +212,16 @@ export default function App() {
 
   return (
     <main className="flex flex-col justify-start items-center gap-12 min-h-screen bg-slate-900 text-slate-950 p-4 sm:p-12">
+      {(gameIsOver && lastAnswer.value && lastAnswer.isCorrect) && (
+        <Confetti
+          width={width}
+          height={height}
+          recycle={false}
+          numberOfPieces={2500}
+          tweenDuration={9000}
+          gravity={0.1}
+        />
+      )}
       <Header />
       <Status statusType={statusType} lastAnswer={lastAnswer} />
       <Languages languages={languages} />
